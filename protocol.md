@@ -25,7 +25,7 @@ Jednoduchá chatovací aplikace, která umoňuje komunikovat mezi uživateli v r
 ## Technologie
 
 - .NET 6
-- Razor
+- Razor Pages
 - SignalR
 - Docker
 - MongoDB
