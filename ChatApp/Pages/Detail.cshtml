@@ -1,0 +1,25 @@
+@page
+@model DetailPageModel
+
+@{
+    ViewData["Title"] = Model.ChatRoom.Title;
+}
+
+<h1>@Model.ChatRoom.Title</h1>
+<h3>@Model.ChatRoom.Description</h3>
+<br />
+<form method="post">
+    <input hidden asp-for="Input.ChatRoomId" value="@Model.ChatRoom.Id" />
+    <div class="form-group">
+        <label asp-for="Input.Content"></label>
+        <textarea asp-for="Input.Content" class="form-control"></textarea>
+        <span asp-validation-for="Input.Content" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Send</button>
+</form>
+<br />
+@foreach (var message in Model.Messages)
+{
+    <p>@message.Content</p>
+    <br />
+}

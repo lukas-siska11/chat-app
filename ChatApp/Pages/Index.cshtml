@@ -1,7 +1,13 @@
 ﻿@page
 @model IndexPageModel
+
 @{
     ViewData["Title"] = "List of chat rooms";
 }
 
-TBD
+@foreach (var chatRoom in Model.ChatRooms)
+{
+    <a asp-page="Detail" asp-route-chatRoomId="@chatRoom.Id"><h1>@chatRoom.Title</h1></a>
+    <h3>@chatRoom.Description</h3>
+    <br />
+}
