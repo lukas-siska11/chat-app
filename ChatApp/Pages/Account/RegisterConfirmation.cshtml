@@ -1,11 +1,8 @@
 @page
 @model RegisterConfirmationPageModel
 
-@{
-    ViewData["Title"] = "Register confirmation";
-}
- 
-<h1>@ViewData["Title"]</h1>
-<p>
-    You account with email @Model.Email has been registered sucessfully.
-</p>
+<main class="main">
+    <div class="container w-50 h-100 d-flex align-items-center">
+        <h2>You account with email @Model.Email has been registered sucessfully. You can now <a class="link-primary" asp-area="" asp-page="/Account/Login">log in</a>.</h2>
+    </div>
+</main>

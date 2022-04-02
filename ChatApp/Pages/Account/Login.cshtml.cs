@@ -25,8 +25,6 @@ public class LoginPageModel : PageModel
     [BindProperty] 
     public InputModel Input { get; init; }
 
-    public string? ReturnUrl { get; set; }
-
     public class InputModel
     {
         [Required] 
@@ -38,24 +36,29 @@ public class LoginPageModel : PageModel
         public string Password { get; set; } = string.Empty;
     }
 
-    public async Task OnGetAsync(string? returnUrl = null)
+    public async Task OnGetAsync()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        ReturnUrl = returnUrl;
     }
 
-    public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
+    public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
         {
             return Page();
         }
         
-        returnUrl ??= Url.Content("~/");
-        var user = await _userRepository.GetAsync(user => user.Email == Input.Email && user.Password == Input.Password);
+        var user = await _userRepository.GetAsync(user => user.Email == Input.Email);
         if (user == null)
         {
-            ModelState.AddModelError(string.Empty, "Invalid Email or Password");
+            ModelState.AddModelError("Input.Email", "User with this Email does not exist.");
+
+            return Page();
+        }
+        
+        if (!BCrypt.Net.BCrypt.Verify(Input.Password, user.Password))
+        {
+            ModelState.AddModelError("Input.Password", "Incorrect Password");
 
             return Page();
         }
@@ -75,6 +78,6 @@ public class LoginPageModel : PageModel
             new AuthenticationProperties {IsPersistent = true}
         );
 
-        return LocalRedirect(returnUrl);
+        return LocalRedirect(Url.Content("~/"));
     }
 }

@@ -13,14 +13,9 @@ public class LogoutPageModel : PageModel
     {
     }
  
-    public async Task<IActionResult> OnPost(string? returnUrl = null)
+    public async Task<IActionResult> OnPost()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        if (returnUrl != null)
-        {
-            return LocalRedirect(returnUrl);
-        }
-        
-        return RedirectToPage();
+        return RedirectToPage("Login");
     }
 }

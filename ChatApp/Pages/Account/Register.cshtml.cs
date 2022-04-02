@@ -22,8 +22,6 @@ public class RegisterPageModel : PageModel
     [BindProperty]
     public InputModel Input { get; set; }
 
-    public string? ReturnUrl { get; set; }
-
     public class InputModel
     {
         [Required] 
@@ -51,9 +49,8 @@ public class RegisterPageModel : PageModel
         public string ConfirmPassword { get; set; } = string.Empty;
     }
 
-    public void OnGet(string? returnUrl = null)
+    public void OnGet()
     {
-        ReturnUrl = returnUrl;
     }
 
     public async Task<IActionResult> OnPostAsync()
@@ -66,7 +63,7 @@ public class RegisterPageModel : PageModel
         var user = await _userRepository.GetAsync(user => user.Email == Input.Email);
         if (user != null)
         {
-            ModelState.AddModelError(string.Empty, Input.Email + " already exists");
+            ModelState.AddModelError("Input.Email", "Email " + Input.Email + " already exists");
 
             return Page();
         }
@@ -76,7 +73,7 @@ public class RegisterPageModel : PageModel
             Name = Input.Name,
             Surname = Input.Surname,
             Email = Input.Email,
-            Password = Input.Password
+            Password = BCrypt.Net.BCrypt.HashPassword(Input.Password)
         };
         await _userRepository.CreateAsync(user);
 
