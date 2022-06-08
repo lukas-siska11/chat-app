@@ -32,13 +32,13 @@ Jednoduchá chatovací aplikace, která umoňuje komunikovat mezi uživateli v r
 
 ## Časový plán
 
-- Plánování + založení .NET projektu + příprava technologií + příprava databázové struktury (4 hodiny)
-- Základní struktura .NET projektu (projekty, modely, repository, service, ...) (4 hodiny)
-- Implementace registrace a přihlášení (4 hodiny)
-- Implementace zobrazení seznamu místností (4 hodiny)
-- Implementace zobrazení seznamu zpráv ve vybrané místnosti (4 hodiny)
-- Integrace SignalR do projektu (4 hodiny)
-- Implementace odesílání zprávy pomocí SignalR (4 hodiny)
-- Implementace přijímání zpráv pomocí SignalR (4 hodiny)
-- Úprava vzhledu aplikace (4 hodiny)
-- Refactoring + testování (4 hodiny)
+- Plánování + založení .NET projektu + příprava technologií + příprava databázové struktury
+- Základní struktura .NET projektu (projekty, modely, repository, service, ...)
+- Implementace registrace a přihlášení
+- Implementace zobrazení seznamu místností
+- Implementace zobrazení seznamu zpráv ve vybrané místnosti
+- Integrace SignalR do projektu
+- Implementace odesílání zprávy pomocí SignalR
+- Implementace přijímání zpráv pomocí SignalR
+- Úprava vzhledu aplikace
+- Refactoring + testování
