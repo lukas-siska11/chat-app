@@ -10,9 +10,9 @@ namespace ChatApp.Pages.Account;
 [AllowAnonymous]
 public class RegisterPageModel : PageModel
 {
-    private readonly IRepository<User> _userRepository;
+    private readonly IUserRepository _userRepository;
 
-    public RegisterPageModel(IRepository<User> userRepository)
+    public RegisterPageModel(IUserRepository userRepository)
     {
         _userRepository = userRepository;
 

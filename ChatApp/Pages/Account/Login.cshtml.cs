@@ -13,9 +13,9 @@ namespace ChatApp.Pages.Account;
 [AllowAnonymous]
 public class LoginPageModel : PageModel
 {
-    private readonly IRepository<User> _userRepository;
+    private readonly IUserRepository _userRepository;
 
-    public LoginPageModel(IRepository<User> userRepository)
+    public LoginPageModel(IUserRepository userRepository)
     {
         _userRepository = userRepository;
 

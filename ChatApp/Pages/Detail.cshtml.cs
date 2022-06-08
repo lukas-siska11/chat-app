@@ -9,10 +9,10 @@ namespace ChatApp.Pages;
 
 public class DetailPageModel : PageModel
 {
-    private readonly IRepository<ChatRoom> _chatRoomRepository;
-    private readonly IRepository<Message> _messageRepository;
+    private readonly IChatRoomRepository _chatRoomRepository;
+    private readonly IMessageRepository _messageRepository;
 
-    public DetailPageModel(IRepository<ChatRoom> chatRoomRepository, IRepository<Message> messageRepository)
+    public DetailPageModel(IChatRoomRepository chatRoomRepository, IMessageRepository messageRepository)
     {
         _chatRoomRepository = chatRoomRepository;
         _messageRepository = messageRepository;

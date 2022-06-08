@@ -1,4 +1,3 @@
-using ChatApp.Entities;
 using ChatApp.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
@@ -13,9 +12,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 builder.Services.AddRazorPages();
 builder.Services.AddMongo();
-builder.Services.AddMongoRepository<User>("Users");
-builder.Services.AddMongoRepository<ChatRoom>("ChatRooms");
-builder.Services.AddMongoRepository<Message>("Messages");
+builder.Services.AddUserMongoRepository();
+builder.Services.AddChatRoomMongoRepository();
+builder.Services.AddMessageMongoRepository();
 
 var app = builder.Build();
 

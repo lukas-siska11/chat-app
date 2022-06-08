@@ -7,9 +7,9 @@ namespace ChatApp.Pages.Account;
 
 public class RegisterConfirmationPageModel : PageModel
 {
-    private readonly IRepository<User> _userRepository;
+    private readonly IUserRepository _userRepository;
 
-    public RegisterConfirmationPageModel(IRepository<User> userRepository)
+    public RegisterConfirmationPageModel(IUserRepository userRepository)
     {
         _userRepository = userRepository;
     }

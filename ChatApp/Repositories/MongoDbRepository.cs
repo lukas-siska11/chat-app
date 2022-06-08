@@ -6,49 +6,49 @@ namespace ChatApp.Repositories;
 
 public class MongoDbRepository<T> : IRepository<T> where T : IEntity
 {
-    private readonly IMongoCollection<T> _dbCollection;
-    private readonly FilterDefinitionBuilder<T> _filterBuilder = Builders<T>.Filter;
+    protected readonly IMongoCollection<T> DbCollection;
+    protected readonly FilterDefinitionBuilder<T> FilterBuilder = Builders<T>.Filter;
 
     public MongoDbRepository(IMongoDatabase database, string collectionName)
     {
-        _dbCollection = database.GetCollection<T>(collectionName);
+        DbCollection = database.GetCollection<T>(collectionName);
     }
 
     public async Task<IReadOnlyCollection<T>> GetAllAsync()
     {
-        return await _dbCollection.Find(_filterBuilder.Empty).ToListAsync();
+        return await DbCollection.Find(FilterBuilder.Empty).ToListAsync();
     }
 
     public async Task<IReadOnlyCollection<T>> GetAllAsync(Expression<Func<T, bool>> filter)
     {
-        return await _dbCollection.Find(filter).ToListAsync();
+        return await DbCollection.Find(filter).ToListAsync();
     }
 
     public async Task<T?> GetAsync(Guid id)
     {
-        var filter = _filterBuilder.Eq(item => item.Id, id);
-        return await _dbCollection.Find(filter).FirstOrDefaultAsync();
+        var filter = FilterBuilder.Eq(item => item.Id, id);
+        return await DbCollection.Find(filter).FirstOrDefaultAsync();
     }
 
     public async Task<T?> GetAsync(Expression<Func<T, bool>> filter)
     {
-        return await _dbCollection.Find(filter).FirstOrDefaultAsync();
+        return await DbCollection.Find(filter).FirstOrDefaultAsync();
     }
 
     public async Task CreateAsync(T entity)
     {
-        await _dbCollection.InsertOneAsync(entity);
+        await DbCollection.InsertOneAsync(entity);
     }
 
     public async Task UpdateAsync(T entity)
     {
-        var filter = _filterBuilder.Eq(existingEntity => existingEntity.Id, entity.Id);
-        await _dbCollection.ReplaceOneAsync(filter, entity);
+        var filter = FilterBuilder.Eq(existingEntity => existingEntity.Id, entity.Id);
+        await DbCollection.ReplaceOneAsync(filter, entity);
     }
 
     public async Task RemoveAsync(Guid id)
     {
-        var filter = _filterBuilder.Eq(entity => entity.Id, id);
-        await _dbCollection.DeleteOneAsync(filter);
+        var filter = FilterBuilder.Eq(entity => entity.Id, id);
+        await DbCollection.DeleteOneAsync(filter);
     }
 }

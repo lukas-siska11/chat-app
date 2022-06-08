@@ -9,9 +9,9 @@ namespace ChatApp.Pages;
 [Authorize]
 public class IndexPageModel : PageModel
 {
-    private readonly IRepository<ChatRoom> _chatRoomRepository;
+    private readonly IChatRoomRepository _chatRoomRepository;
 
-    public IndexPageModel(IRepository<ChatRoom> chatRoomRepository)
+    public IndexPageModel(IChatRoomRepository chatRoomRepository)
     {
         _chatRoomRepository = chatRoomRepository;
     }

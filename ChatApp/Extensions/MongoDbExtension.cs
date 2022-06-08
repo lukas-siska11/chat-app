@@ -26,13 +26,34 @@ public static class Extensions
         return services;
     }
 
-    public static IServiceCollection AddMongoRepository<T>(this IServiceCollection services, string collectionName)
-        where T : IEntity
+    public static IServiceCollection AddUserMongoRepository(this IServiceCollection services)
     {
-        services.AddSingleton<IRepository<T>>(serviceProvider =>
+        services.AddSingleton<IUserRepository>(serviceProvider =>
         {
             var database = serviceProvider.GetRequiredService<IMongoDatabase>();
-            return new MongoDbRepository<T>(database, collectionName);
+            return new UserMongoDbRepository(database, "Users");
+        });
+
+        return services;
+    }
+    
+    public static IServiceCollection AddMessageMongoRepository(this IServiceCollection services)
+    {
+        services.AddSingleton<IMessageRepository>(serviceProvider =>
+        {
+            var database = serviceProvider.GetRequiredService<IMongoDatabase>();
+            return new MessageMongoDbRepository(database, "Messages");
+        });
+
+        return services;
+    }
+    
+    public static IServiceCollection AddChatRoomMongoRepository(this IServiceCollection services)
+    {
+        services.AddSingleton<IChatRoomRepository>(serviceProvider =>
+        {
+            var database = serviceProvider.GetRequiredService<IMongoDatabase>();
+            return new ChatRoomMongoDbRepository(database, "ChatRooms");
         });
 
         return services;
