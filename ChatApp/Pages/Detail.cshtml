@@ -1,25 +1,62 @@
 @page
+@using System.Security.Claims
 @model DetailPageModel
 
 @{
-    ViewData["Title"] = Model.ChatRoom.Title;
+    Layout = null;
+    var authenticatedUserId = User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
 }
 
-<h1>@Model.ChatRoom.Title</h1>
-<h3>@Model.ChatRoom.Description</h3>
-<br />
-<form method="post">
-    <input hidden asp-for="Input.ChatRoomId" value="@Model.ChatRoom.Id" />
-    <div class="form-group">
-        <label asp-for="Input.Content"></label>
-        <textarea asp-for="Input.Content" class="form-control"></textarea>
-        <span asp-validation-for="Input.Content" class="text-danger"></span>
+<main id="chat-room-messages" class="main is-visible" data-id="@Model.ChatRoom.Id" data-user-id="@authenticatedUserId">
+    <div class="container h-100">
+        <div class="d-flex flex-column h-100 position-relative">
+            <div class="chat-header border-bottom py-4 py-lg-7">
+                <div class="row align-items-center">
+                    <div class="col-8 col-xl-12">
+                        <div class="row align-items-center text-center text-xl-start">
+                            <div class="col-12 col-xl-6">
+                                <div class="row align-items-center gx-5">
+                                    <div class="col overflow-hidden">
+                                        <h5 class="text-truncate">@Model.ChatRoom.Title</h5>
+                                        <p class="text-truncate">@Model.ChatRoom.Description</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="chat-room-body" class="chat-body hide-scrollbar flex-1 h-100">
+                <div class="chat-body-inner">
+                    <div id="messageList" class="py-6 py-lg-12">
+                        @foreach (var message in Model.Messages)
+                        {
+                            <partial name="_Message" model="message" />
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="chat-footer bottom-0 start-0">
+                <div class="chat-form rounded-pill bg-dark ms-5 me-5">
+                    <div class="row align-items-center gx-0">
+                        <div class="col">
+                            <div class="input-group">
+                                <textarea id="messageInput" class="form-control px-0 ps-3" placeholder="Type your message..." rows="1" data-autosize="true" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 47px;"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-auto">
+                            <button class="btn btn-icon btn-primary rounded-circle ms-5" id="sendButton">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-send"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+               <div class="row pt-2 pb-3" style="margin-left: 16px;font-size: 12px">
+                   <p id="isTypingText">&#8205;</p>
+                </div>
+            </div>
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary">Send</button>
-</form>
-<br />
-@foreach (var message in Model.Messages)
-{
-    <p>@message.Content</p>
-    <br />
-}
+</main>
+<script src="~/js/chat.js" asp-append-version="true"></script>

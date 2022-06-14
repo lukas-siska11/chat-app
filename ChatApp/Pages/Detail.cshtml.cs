@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
 using ChatApp.Entities;
 using ChatApp.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -50,22 +49,10 @@ public class DetailPageModel : PageModel
 
         return Page();
     }
-    
-    public async Task<IActionResult> OnPostAsync()
+
+    public async Task<IActionResult> OnGetMessage(Guid messageId)
     {
-        if (!ModelState.IsValid)
-        {
-            return Page();
-        }
-
-        var message = new Message
-        {
-            Content = Input.Content,
-            ChatRoomId = Input.ChatRoomId,
-            UserId = Guid.Parse(User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value)
-        };
-        await _messageRepository.CreateAsync(message);
-
-        return RedirectToPage(new { chatRoomId = Input.ChatRoomId });
+        var message = await _messageRepository.GetAsync(messageId);
+        return Partial("_Message", message);
     }
 }

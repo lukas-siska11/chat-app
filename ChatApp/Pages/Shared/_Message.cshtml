@@ -1,0 +1,28 @@
+@using System.Security.Claims
+@model ChatApp.Entities.Message
+
+@{
+    Layout = null;
+    var authenticatedUserId = Guid.Parse(User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value);
+    var formattedDateTime = TimeZoneInfo.ConvertTimeFromUtc(Model.CreatedDate.DateTime, TimeZoneInfo.Local).ToString("dd.MM.yyyy HH:mm");
+}
+
+<div class="message @(authenticatedUserId == Model.UserId ? "message-out" : "")">
+    <div class="avatar">
+        <partial name="_ColoredAvatar" model="Model.User" />
+    </div>
+
+    <div class="message-inner">
+        <div class="message-body">
+            <div class="message-content">
+                <div class="message-text">
+                    <p>@Model.Content</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="message-footer">
+            <span class="extra-small text-muted">@Model.User?.Name @Model.User?.Surname - @formattedDateTime</span>
+        </div>
+    </div>
+</div>
