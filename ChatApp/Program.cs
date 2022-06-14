@@ -1,4 +1,5 @@
 using ChatApp.Extensions;
+using ChatApp.Hubs;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LogoutPath = "/Account/Logout";
     });
 builder.Services.AddRazorPages();
+builder.Services.AddSignalR();
 builder.Services.AddMongo();
 builder.Services.AddUserMongoRepository();
 builder.Services.AddChatRoomMongoRepository();
@@ -33,6 +35,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHub<ChatHub>("/chat-hub");
 
 app.MapRazorPages();
 
