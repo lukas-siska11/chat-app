@@ -22,4 +22,10 @@ public class MessageMongoDbRepository : MongoDbRepository<Message>, IMessageRepo
 
         return BsonSerializer.Deserialize<List<Message>>(bsonData.ToJson());
     }
+
+    public new async Task<Message?> GetAsync(Guid id)
+    {
+        var collection = await GetAllAsync(message => message.Id == id);
+        return collection.FirstOrDefault();
+    }
 }
