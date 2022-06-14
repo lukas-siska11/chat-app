@@ -9,7 +9,10 @@ connection.on("NewMessage", function (messageId) {
             messageId: messageId
         },
         success: function (html) {
+            document.getElementById('noMessagesText').remove();
+
             $(document).find('#messageList').append($(html));
+
             let chatRoomBody = document.getElementById('chat-room-body');
             chatRoomBody.scrollTop = chatRoomBody.scrollHeight;
         },
