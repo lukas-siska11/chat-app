@@ -1,0 +1,8 @@
+@model ChatApp.Entities.User
+
+@{
+    var avatarColor = Model.AvatarColor != "" ? Model.AvatarColor : "000000";
+    var initials = Model.Name.Substring(0, 1) + Model.Surname.Substring(0, 1);
+}
+
+<span class="colored-avatar" style="background-color: #@avatarColor">@initials</span>
