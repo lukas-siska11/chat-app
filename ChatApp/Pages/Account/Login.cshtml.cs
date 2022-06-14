@@ -67,6 +67,10 @@ public class LoginPageModel : PageModel
         {
             new(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new(ClaimTypes.Name, user.Email),
+            new("Name", user.Name),
+            new("Surname", user.Surname),
+            new("FullName", user.Name + " " + user.Surname),
+            new("AvatarColor", user.AvatarColor)
         };
 
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

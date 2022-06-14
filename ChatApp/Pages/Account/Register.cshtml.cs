@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using ChatApp.Entities;
 using ChatApp.Repositories;
+using ColorHelper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -73,7 +74,8 @@ public class RegisterPageModel : PageModel
             Name = Input.Name,
             Surname = Input.Surname,
             Email = Input.Email,
-            Password = BCrypt.Net.BCrypt.HashPassword(Input.Password)
+            Password = BCrypt.Net.BCrypt.HashPassword(Input.Password),
+            AvatarColor = ColorGenerator.GetDarkRandomColor<HEX>().ToString()
         };
         await _userRepository.CreateAsync(user);
 

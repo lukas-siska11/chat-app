@@ -11,4 +11,6 @@ public class User : IEntity
     public string Email { get; set; } = string.Empty;
 
     public string Password { get; set; } = string.Empty;
+
+    public string AvatarColor { get; set; } = string.Empty;
 }
