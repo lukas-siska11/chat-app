@@ -1,13 +1,10 @@
 ﻿@page
 @model IndexPageModel
 
-@{
-    ViewData["Title"] = "List of chat rooms";
-}
+<partial name="_ChatRoomList" model="Model.ChatRooms"/>
 
-@foreach (var chatRoom in Model.ChatRooms)
-{
-    <a asp-page="Detail" asp-route-chatRoomId="@chatRoom.Id"><h1>@chatRoom.Title</h1></a>
-    <h3>@chatRoom.Description</h3>
-    <br />
-}
+<main id="chat-room-messages" class="main is-visible">
+    <div class="container h-100 d-flex justify-content-center align-items-center">
+        <h1>Choose chat room from the sidebar</h1>
+    </div>
+</main>
