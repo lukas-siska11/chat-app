@@ -9,7 +9,10 @@ connection.on("NewMessage", function (messageId) {
             messageId: messageId
         },
         success: function (html) {
-            document.getElementById('noMessagesText').remove();
+            let noMessageText = document.getElementById('noMessagesText');
+            if (typeof noMessageText !== 'undefined' && noMessageText !== null) {
+                noMessageText.remove();
+            }
 
             $(document).find('#messageList').append($(html));
 
